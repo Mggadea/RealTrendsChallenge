@@ -11,18 +11,21 @@ type ProductProps = {
 };
 
 const Product: React.FC<ProductProps> = ({item}) => {
- 
+  const handlePress = () => {};
 
-const handlePress = () => {
-  
-}
+  function convertToHttps(url) {
+    if (url.startsWith('http://')) {
+      return 'https://' + url.slice(7);
+    }
+    return url;
+  }
 
   return (
     <TouchableOpacity onPress={handlePress} style={styles.container}>
       <Image
         style={styles.image}
         source={{
-          uri: item.thumbnail,
+          uri: convertToHttps(item?.thumbnail),
         }}
         onError={error =>
           console.log('Image Load Error:', error.nativeEvent.error)
@@ -31,6 +34,9 @@ const handlePress = () => {
       <View style={styles.info}>
         <Text style={styles.name}>{item?.title} </Text>
         <Text style={styles.price}>{formatCurrency(item?.price)}</Text>
+        <Text style={styles.condition}>
+          {item?.condition == 'new' ? 'Nuevo' : 'Usado'}
+        </Text>
       </View>
     </TouchableOpacity>
   );
@@ -45,13 +51,19 @@ const styles = StyleSheet.create({
     height: 150,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
-    margin: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
   },
   image: {
-    width: 150,
+    backgroundColor: '#f4f4f4',
+    borderRadius: 8,
+    width: 100,
+    height: '100%',
+    resizeMode: 'contain',
+
   },
   info: {
-    padding: 20,
+    padding: 10,
     flex: 1,
   },
   price: {
@@ -60,5 +72,10 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 16,
+  },
+  condition: {
+    color: '#6a6a6a',
+    fontSize: 14,
+    marginTop: 5,
   },
 });

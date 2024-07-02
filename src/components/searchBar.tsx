@@ -8,13 +8,24 @@ import {
 import React from 'react';
 import Icon from 'react-native-vector-icons/Feather';
 
-const SearchBar = () => {
+interface SearchBarProps {
+  searchText: string;
+  setSearchText: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const SearchBar: React.FC<SearchBarProps> = ({searchText, setSearchText}) => {
   return (
     <View style={styles.container}>
-      <TextInput style={styles.input} placeholder="Search" />
+      <TextInput
+        style={styles.input}
+        placeholder="Search"
+        value={searchText}
+        onChangeText={setSearchText}
+      />
+
       <TouchableOpacity style={styles.filterButton}>
-        <Text>Filtrar</Text>
-        <Icon />
+        <Text style={styles.filterText}>Filtrar </Text>
+        <Icon name="chevron-down"  color='red' size={22} />
       </TouchableOpacity>
     </View>
   );
@@ -40,8 +51,10 @@ const styles = StyleSheet.create({
   filterButton: {
     justifyContent: 'center',
     alignItems: 'center',
-    flexDirection:'row',
-
+    flexDirection: 'row',
     flex: 1,
+  },
+  filterText: {
+    fontWeight: '500',
   },
 });
