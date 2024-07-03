@@ -1,6 +1,7 @@
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {formatCurrency} from '../helpers/formatCurreny';
+import FavButton from './favButton';
 
 type ProductProps = {
   item: {
@@ -22,15 +23,20 @@ const Product: React.FC<ProductProps> = ({item}) => {
 
   return (
     <TouchableOpacity onPress={handlePress} style={styles.container}>
-      <Image
-        style={styles.image}
-        source={{
-          uri: convertToHttps(item?.thumbnail),
-        }}
-        onError={error =>
-          console.log('Image Load Error:', error.nativeEvent.error)
-        }
-      />
+      <View style={styles.imageContainer}>
+        <Image
+          style={styles.image}
+          source={{
+            uri: convertToHttps(item?.thumbnail),
+          }}
+          onError={error =>
+            console.log('Image Load Error:', error.nativeEvent.error)
+          }
+        />
+
+        <FavButton />
+      </View>
+
       <View style={styles.info}>
         <Text style={styles.name}>{item?.title} </Text>
         <Text style={styles.price}>{formatCurrency(item?.price)}</Text>
@@ -55,12 +61,16 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   image: {
-    backgroundColor: '#f4f4f4',
     borderRadius: 8,
     width: 100,
     height: '100%',
     resizeMode: 'contain',
-
+  },
+  imageContainer: {
+    flexDirection: 'row',
+    backgroundColor: '#f4f4f4',
+    padding: 5,
+    borderRadius:10
   },
   info: {
     padding: 10,

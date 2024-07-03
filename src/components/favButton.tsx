@@ -1,13 +1,10 @@
-import {StyleSheet, TouchableOpacity,} from 'react-native';
+import {StyleSheet, TouchableOpacity} from 'react-native';
 import React from 'react';
 import Icon from 'react-native-vector-icons/Feather';
 
 const FavButton = ({handlePress}) => {
-
   return (
-    <TouchableOpacity
-    onPress={handlePress}
-    style={styles.container}>
+    <TouchableOpacity onPress={handlePress} style={styles.container}>
       <Icon name="favorite" color="#3a86ff" />
     </TouchableOpacity>
   );
