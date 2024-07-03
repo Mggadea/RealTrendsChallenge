@@ -1,11 +1,15 @@
 import {StyleSheet, TouchableOpacity} from 'react-native';
-import React from 'react';
-import Icon from 'react-native-vector-icons/Feather';
+import React, { useState } from 'react';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-const FavButton = ({handlePress}) => {
+const FavButton = () => {
+const [isPressed, setIsPressed] = useState(false)
+
+
   return (
-    <TouchableOpacity onPress={handlePress} style={styles.container}>
-      <Icon name="favorite" color="#3a86ff" />
+    <TouchableOpacity  onPress={()=>setIsPressed(!isPressed)} style={styles.container}>
+      
+      <Icon name={isPressed ? 'heart' : 'heart-o' } color="#3a86ff"  size={15}/>
     </TouchableOpacity>
   );
 };
@@ -14,10 +18,10 @@ export default FavButton;
 
 const styles = StyleSheet.create({
   container: {
-    height: 20,
-    width: 20,
+    height: 30,
+    width: 30,
     backgroundColor: '#fff',
-    borderRadius: 10,
+    borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
   },
