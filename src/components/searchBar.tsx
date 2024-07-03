@@ -11,14 +11,21 @@ import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/Feather';
 import Checkbox from './checkbox';
 
+type Condition = 'new' | 'used' | '';
+
 interface SearchBarProps {
   searchText: string;
   setSearchText: React.Dispatch<React.SetStateAction<string>>;
   condition: string;
-  setCondition: React.Dispatch<React.SetStateAction<Condition>;
+  setCondition: React.Dispatch<React.SetStateAction<Condition>>;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({searchText, setSearchText}) => {
+const SearchBar: React.FC<SearchBarProps> = ({
+  searchText,
+  setSearchText,
+  condition,
+  setCondition,
+}) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   return (
     <View style={styles.container}>
@@ -54,14 +61,18 @@ const SearchBar: React.FC<SearchBarProps> = ({searchText, setSearchText}) => {
             </View>
             <View>
               <TouchableOpacity
-              onPress={()setCond}
-              style={styles.modalButton}>
+                onPress={() => setCondition('new')}
+                style={styles.modalButton}>
                 <Text style={styles.modalButtonText}>Nuevo</Text>
-                <Checkbox checked={true} />
+                <Checkbox checked={condition == 'new'} onChange={() => setCondition('new')} />
+
               </TouchableOpacity>
-              <TouchableOpacity style={styles.modalButton}>
+              <TouchableOpacity
+                onPress={() => setCondition('used')}
+                style={styles.modalButton}>
                 <Text style={styles.modalButtonText}>Usado</Text>
-                <Checkbox />
+                <Checkbox checked={condition == 'used'} onChange={() => setCondition('used')} />
+
               </TouchableOpacity>
             </View>
           </View>

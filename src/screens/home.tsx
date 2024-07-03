@@ -1,15 +1,8 @@
 /* eslint-disable no-catch-shadow */
-import {
-  ActivityIndicator,
-  FlatList,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import {ActivityIndicator, StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import SearchBar from '../components/searchBar';
-import Product from '../components/product';
 import {SafeAreaView} from 'react-native';
 import ListOfProducts from '../components/listOfProducts';
 
@@ -41,8 +34,10 @@ const HomeScreen = () => {
     fetchData();
   }, []);
 
-  const filteredData = data.filter(item =>
-    item?.title.toLowerCase().includes(searchText.toLowerCase()),
+  const filteredData = data.filter(
+    item =>
+      item?.title.toLowerCase().includes(searchText.toLowerCase()) &&
+      (condition === '' || item?.condition === condition),
   );
 
   return (
