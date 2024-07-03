@@ -4,29 +4,69 @@ import {
   TextInput,
   TouchableOpacity,
   Text,
+  Modal,
+  Pressable,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/Feather';
+import Checkbox from './checkbox';
 
 interface SearchBarProps {
   searchText: string;
   setSearchText: React.Dispatch<React.SetStateAction<string>>;
+  condition: string;
+  setCondition: React.Dispatch<React.SetStateAction<Condition>;
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({searchText, setSearchText}) => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholder="Search"
-        value={searchText}
-        onChangeText={setSearchText}
-      />
+      <View style={styles.input}>
+        <Icon name="search" color="#ccc" size={18} />
 
-      <TouchableOpacity style={styles.filterButton}>
+        <TextInput
+          placeholder="Usa el buscador para encontrar productos"
+          style={{marginLeft: 10}}
+          value={searchText}
+          onChangeText={setSearchText}
+        />
+      </View>
+
+      <TouchableOpacity
+        onPress={() => setIsModalVisible(!isModalVisible)}
+        style={styles.filterButton}>
         <Text style={styles.filterText}>Filtrar </Text>
-        <Icon name="chevron-down"  color='red' size={22} />
+        <Icon name="chevron-down" color="#2b2b2b" size={22} />
       </TouchableOpacity>
+
+      <Modal
+        style={{flex: 1}}
+        animationType="fade"
+        transparent={true}
+        visible={isModalVisible}>
+        <Pressable
+          onPress={() => setIsModalVisible(false)}
+          style={{flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.2)'}}>
+          <View style={styles.modalContainer}>
+            <View style={styles.modalTextContainer}>
+              <Text style={styles.modalText}>Condición</Text>
+            </View>
+            <View>
+              <TouchableOpacity
+              onPress={()setCond}
+              style={styles.modalButton}>
+                <Text style={styles.modalButtonText}>Nuevo</Text>
+                <Checkbox checked={true} />
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.modalButton}>
+                <Text style={styles.modalButtonText}>Usado</Text>
+                <Checkbox />
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Pressable>
+      </Modal>
     </View>
   );
 };
@@ -41,6 +81,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   input: {
+    flexDirection: 'row',
     height: 40,
     margin: 10,
     padding: 10,
@@ -56,5 +97,34 @@ const styles = StyleSheet.create({
   },
   filterText: {
     fontWeight: '500',
+  },
+
+  modalContainer: {
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    overflow: 'hidden',
+    top: 100,
+    left: 100,
+    width: '60%',
+  },
+  modalTextContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    height: 50,
+  },
+  modalText: {
+    marginLeft: 10,
+    fontWeight: '500',
+  },
+  modalButton: {
+    height: 50,
+    backgroundColor: '#f4f4f4',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+    borderBottomColor: '#ccc',
+    borderBottomWidth: 1,
   },
 });

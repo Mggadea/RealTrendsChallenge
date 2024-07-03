@@ -2,6 +2,9 @@ import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {formatCurrency} from '../helpers/formatCurreny';
 import FavButton from './favButton';
+import {useNavigation} from '@react-navigation/native';
+import useFavoriteStore from '../store/store';
+import {convertToHttps} from '../helpers/convertHttps'
 
 type ProductProps = {
   item: {
@@ -12,14 +15,26 @@ type ProductProps = {
 };
 
 const Product: React.FC<ProductProps> = ({item}) => {
-  const handlePress = () => {};
+  const navigation = useNavigation();
 
-  function convertToHttps(url) {
-    if (url.startsWith('http://')) {
-      return 'https://' + url.slice(7);
+  const {favorites, addFavorite, removeFavorite} = useFavoriteStore();
+
+  const isFavorite = favorites.includes(item);
+
+
+
+  const handlePress = () => {
+    navigation.navigate('Details', { id: item.id });
+
+  };
+
+  const handleAddFavorite = () => {
+    if (isFavorite) {
+      removeFavorite(item);
+    } else {
+      addFavorite(item);
     }
-    return url;
-  }
+  };
 
   return (
     <TouchableOpacity onPress={handlePress} style={styles.container}>
@@ -34,7 +49,7 @@ const Product: React.FC<ProductProps> = ({item}) => {
           }
         />
 
-        <FavButton />
+        <FavButton isFavorite={isFavorite} onPress={handleAddFavorite} />
       </View>
 
       <View style={styles.info}>
@@ -70,7 +85,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: '#f4f4f4',
     padding: 5,
-    borderRadius:10
+    borderRadius: 10,
   },
   info: {
     padding: 10,

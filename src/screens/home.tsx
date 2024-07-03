@@ -1,17 +1,28 @@
 /* eslint-disable no-catch-shadow */
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {
+  ActivityIndicator,
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import SearchBar from '../components/searchBar';
 import Product from '../components/product';
+import {SafeAreaView} from 'react-native';
+import ListOfProducts from '../components/listOfProducts';
 
+type Condition = 'new' | 'used' | '';
 
 const HomeScreen = () => {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState<Array>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState(null);
 
   const [searchText, setSearchText] = useState<string>('');
+
+  const [condition, setCondition] = useState<Condition>('new');
 
   useEffect(() => {
     const apiUrl =
@@ -35,16 +46,22 @@ const HomeScreen = () => {
   );
 
   return (
-    <View style={styles.container}>
-      <SearchBar searchText={searchText} setSearchText={setSearchText} />
-
-      <FlatList
-      style={{flex:1,}}
-        data={filteredData}
-        renderItem={({item}) => <Product item={item} />}
-        keyExtractor={item => item.id}
-      />
-    </View>
+    <>
+      <SafeAreaView style={{backgroundColor: '#ffe600'}} />
+      <View style={styles.container}>
+        <SearchBar
+          searchText={searchText}
+          setSearchText={setSearchText}
+          condition={condition}
+          setCondition={setCondition}
+        />
+        {loading ? (
+          <ActivityIndicator />
+        ) : (
+          <ListOfProducts data={filteredData} />
+        )}
+      </View>
+    </>
   );
 };
 
@@ -52,7 +69,7 @@ export default HomeScreen;
 
 const styles = StyleSheet.create({
   container: {
-    flex:1,
+    flex: 1,
     backgroundColor: '#fff',
   },
 });
