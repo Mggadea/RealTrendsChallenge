@@ -4,26 +4,29 @@ import {formatCurrency} from '../helpers/formatCurreny';
 import FavButton from './favButton';
 import {useNavigation} from '@react-navigation/native';
 import useFavoriteStore from '../store/store';
-import {convertToHttps} from '../helpers/convertHttps'
+import {convertToHttps} from '../helpers/convertHttps';
+import {ProductInterface} from '../types/types';
 
 type ProductProps = {
-  item: {
-    thumbnail: string;
-    title: string;
-    price: number;
-  };
+  item: ProductInterface;
 };
+
+interface FavoriteStore {
+  favorites: ProductInterface[];
+  addFavorite: (favorite: ProductInterface) => void;
+  removeFavorite: (favorite: ProductInterface) => void;
+}
 
 const Product: React.FC<ProductProps> = ({item}) => {
   const navigation = useNavigation();
 
-  const {favorites, addFavorite, removeFavorite} = useFavoriteStore();
+  const {favorites, addFavorite, removeFavorite} =
+    useFavoriteStore() as FavoriteStore;
 
   const isFavorite = favorites.some(fav => fav.id === item.id);
 
   const handlePress = () => {
-    navigation.navigate('Details', { id: item.id });
-
+    navigation.navigate('Details', {id: item.id});
   };
   const handleAddFavorite = () => {
     if (isFavorite) {
@@ -53,7 +56,7 @@ const Product: React.FC<ProductProps> = ({item}) => {
         <Text style={styles.name}>{item?.title} </Text>
         <Text style={styles.price}>{formatCurrency(item?.price)}</Text>
         <Text style={styles.condition}>
-          {item?.condition == 'new' ? 'Nuevo' : 'Usado'}
+          {item?.condition === 'new' ? 'Nuevo' : 'Usado'}
         </Text>
       </View>
     </TouchableOpacity>

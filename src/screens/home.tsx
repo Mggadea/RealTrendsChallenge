@@ -5,13 +5,12 @@ import axios from 'axios';
 import SearchBar from '../components/searchBar';
 import {SafeAreaView} from 'react-native';
 import ListOfProducts from '../components/listOfProducts';
-
-type Condition = 'new' | 'used' | '';
+import {Condition, ProductInterface} from '../types/types';
 
 const HomeScreen = () => {
-  const [data, setData] = useState<Array>([]);
+  const [data, setData] = useState<ProductInterface[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<any>(null);
 
   const [searchText, setSearchText] = useState<string>('');
 
@@ -35,14 +34,14 @@ const HomeScreen = () => {
   }, []);
 
   const filteredData = data.filter(
-    item =>
+    (item: ProductInterface) =>
       item?.title.toLowerCase().includes(searchText.toLowerCase()) &&
       (condition === '' || item?.condition === condition),
   );
 
   return (
     <>
-      <SafeAreaView style={{backgroundColor: '#ffe600'}} />
+      <SafeAreaView style={styles.safeAreaStyle} />
       <View style={styles.container}>
         <SearchBar
           searchText={searchText}
@@ -66,5 +65,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+  },
+  safeAreaStyle: {
+    backgroundColor: '#ffe600',
   },
 });
