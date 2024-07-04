@@ -5,7 +5,6 @@ import axios from 'axios';
 import {formatCurrency} from '../helpers/formatCurreny';
 import {useRoute} from '@react-navigation/native';
 import {useNavigation} from '@react-navigation/native';
-import {convertToHttps} from '../helpers/convertHttps';
 import Carousel from '../components/carousel';
 
 const DetailsScreen = () => {
@@ -14,7 +13,7 @@ const DetailsScreen = () => {
   const navigation = useNavigation();
 
   const [data, setData] = useState<Array>([]);
-  const [description, setDescription] = useState();
+  const [description, setDescription] = useState<string>();
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState(null);
 
@@ -66,7 +65,6 @@ const DetailsScreen = () => {
         <ScrollView style={styles.container}>
           <Text style={styles.titleText}>{data.title}</Text>
           <Carousel images={data.pictures} />
-          <Image />
           <Text style={styles.priceText}>{formatCurrency(data.price)}</Text>
 
           <View style={styles.descriptionContainer}>

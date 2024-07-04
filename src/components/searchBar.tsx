@@ -4,12 +4,11 @@ import {
   TextInput,
   TouchableOpacity,
   Text,
-  Modal,
-  Pressable,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
-import Checkbox from './checkbox';
+import ModalFilter from './modal';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type Condition = 'new' | 'used' | '';
 
@@ -27,13 +26,42 @@ const SearchBar: React.FC<SearchBarProps> = ({
   setCondition,
 }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isFirstTime, setIsFirstTime] = useState(true);
+
+  useEffect(() => {
+    const checkFirstTime = async () => {
+      try {
+        const value = await AsyncStorage.getItem('firstTime');
+        if (value !== null) {
+          setIsFirstTime(false);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    checkFirstTime();
+  }, []);
+
+  const updateFirstTime = async () => {
+    try {
+      await AsyncStorage.setItem('firstTime', 'false');
+      setIsFirstTime(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.input}>
         <Icon name="search" color="#ccc" size={18} />
 
         <TextInput
-          placeholder="Usa el buscador para encontrar productos"
+          placeholder={
+            isFirstTime ? 'Usa el buscador para encontrar productos' : 'Buscar'
+          }
+          onFocus={updateFirstTime}
           style={{marginLeft: 10}}
           value={searchText}
           onChangeText={setSearchText}
@@ -47,48 +75,12 @@ const SearchBar: React.FC<SearchBarProps> = ({
         <Icon name="chevron-down" color="#2b2b2b" size={22} />
       </TouchableOpacity>
 
-      <Modal
-        style={{flex: 1}}
-        animationType="fade"
-        transparent={true}
-        visible={isModalVisible}>
-        <Pressable
-          onPress={() => setIsModalVisible(false)}
-          style={{flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.2)'}}>
-          <Icon
-            name="triangle"
-            color="#fff"
-            size={25}
-            style={{position: 'absolute', top: 95, right: 25}}
-          />
-
-          <View style={styles.modalContainer}>
-            <View style={styles.modalTextContainer}>
-              <Text style={styles.modalText}>Condición</Text>
-            </View>
-            <View>
-              <TouchableOpacity
-                onPress={() => setCondition('new')}
-                style={styles.modalButton}>
-                <Text style={styles.modalButtonText}>Nuevo</Text>
-                <Checkbox
-                  checked={condition == 'new'}
-                  onChange={() => setCondition('new')}
-                />
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => setCondition('used')}
-                style={styles.modalButton}>
-                <Text style={styles.modalButtonText}>Usado</Text>
-                <Checkbox
-                  checked={condition == 'used'}
-                  onChange={() => setCondition('used')}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-        </Pressable>
-      </Modal>
+      <ModalFilter
+        isModalVisible={isModalVisible}
+        setIsModalVisible={setIsModalVisible}
+        setCondition={setCondition}
+        condition={condition}
+      />
     </View>
   );
 };
@@ -119,35 +111,5 @@ const styles = StyleSheet.create({
   },
   filterText: {
     fontWeight: '500',
-  },
-
-  modalContainer: {
-    backgroundColor: '#fff',
-    borderRadius: 4,
-    overflow: 'hidden',
-    top: 105,
-    right: 20,
-    width: '60%',
-    position: 'absolute',
-  },
-  modalTextContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    height: 50,
-  },
-  modalText: {
-    marginLeft: 10,
-    fontWeight: '500',
-  },
-  modalButton: {
-    height: 50,
-    backgroundColor: '#f4f4f4',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 20,
-    borderBottomColor: '#ccc',
-    borderBottomWidth: 1,
   },
 });

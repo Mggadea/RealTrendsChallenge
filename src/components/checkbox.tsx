@@ -3,12 +3,11 @@ import {TouchableOpacity, StyleSheet, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 interface CheckboxProps {
-
   checked: boolean;
   onChange: (checked: boolean) => void;
 }
 
-const Checkbox: React.FC<CheckboxProps> = ({ checked, onChange}) => {
+const Checkbox: React.FC<CheckboxProps> = ({checked, onChange}) => {
   return (
     <TouchableOpacity
       style={styles.container}
@@ -23,7 +22,6 @@ const Checkbox: React.FC<CheckboxProps> = ({ checked, onChange}) => {
         ]}>
         {checked && <Icon name="check" size={15} color="#fff" />}
       </View>
-
     </TouchableOpacity>
   );
 };
@@ -41,7 +39,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-
 });
 
 export default Checkbox;
