@@ -68,9 +68,11 @@ const DetailsScreen = () => {
           <Carousel images={data.pictures} />
           <Image />
           <Text style={styles.priceText}>{formatCurrency(data.price)}</Text>
-          <Text style={styles.descriptionTitle}>Descripción</Text>
 
-          <Text style={styles.description}>{description?.plain_text}</Text>
+          <View style={styles.descriptionContainer}>
+            <Text style={styles.descriptionTitle}>Descripción</Text>
+            <Text style={styles.description}>{description?.plain_text}</Text>
+          </View>
         </ScrollView>
       )}
     </>
@@ -82,6 +84,7 @@ export default DetailsScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#fff',
     padding: 20,
   },
   image: {},
@@ -95,10 +98,17 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   descriptionTitle: {
-    fontSize: 18,
+    fontSize: 20,
     marginTop: 20,
   },
   description: {
+    fontSize: 16,
+    marginTop: 20,
+    color: '#666',
+  },
+  descriptionContainer: {
+    borderTopColor: '#ccc',
+    borderTopWidth: 1,
     marginTop: 20,
   },
 });

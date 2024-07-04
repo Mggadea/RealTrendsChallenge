@@ -19,15 +19,12 @@ const Product: React.FC<ProductProps> = ({item}) => {
 
   const {favorites, addFavorite, removeFavorite} = useFavoriteStore();
 
-  const isFavorite = favorites.includes(item);
-
-
+  const isFavorite = favorites.some(fav => fav.id === item.id);
 
   const handlePress = () => {
     navigation.navigate('Details', { id: item.id });
 
   };
-
   const handleAddFavorite = () => {
     if (isFavorite) {
       removeFavorite(item);

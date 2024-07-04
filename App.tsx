@@ -7,7 +7,7 @@ import MyStack from './src/navigation/stackNavigator';
 
 export default function App() {
   return (
-    <GestureHandlerRootView style={{flex: 1 }}>
+    <GestureHandlerRootView style={{flex: 1}}>
       <NavigationContainer>
         <MyStack />
       </NavigationContainer>
