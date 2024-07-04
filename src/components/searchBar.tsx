@@ -8,7 +8,7 @@ import {
   Pressable,
 } from 'react-native';
 import React, {useState} from 'react';
-import Icon from 'react-native-vector-icons/Feather';
+import Icon from 'react-native-vector-icons/Ionicons';
 import Checkbox from './checkbox';
 
 type Condition = 'new' | 'used' | '';
@@ -55,6 +55,13 @@ const SearchBar: React.FC<SearchBarProps> = ({
         <Pressable
           onPress={() => setIsModalVisible(false)}
           style={{flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.2)'}}>
+          <Icon
+            name="triangle"
+            color="#fff"
+            size={25}
+            style={{position: 'absolute', top: 95, right: 25}}
+          />
+
           <View style={styles.modalContainer}>
             <View style={styles.modalTextContainer}>
               <Text style={styles.modalText}>Condición</Text>
@@ -64,15 +71,19 @@ const SearchBar: React.FC<SearchBarProps> = ({
                 onPress={() => setCondition('new')}
                 style={styles.modalButton}>
                 <Text style={styles.modalButtonText}>Nuevo</Text>
-                <Checkbox checked={condition == 'new'} onChange={() => setCondition('new')} />
-
+                <Checkbox
+                  checked={condition == 'new'}
+                  onChange={() => setCondition('new')}
+                />
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => setCondition('used')}
                 style={styles.modalButton}>
                 <Text style={styles.modalButtonText}>Usado</Text>
-                <Checkbox checked={condition == 'used'} onChange={() => setCondition('used')} />
-
+                <Checkbox
+                  checked={condition == 'used'}
+                  onChange={() => setCondition('used')}
+                />
               </TouchableOpacity>
             </View>
           </View>
@@ -112,11 +123,12 @@ const styles = StyleSheet.create({
 
   modalContainer: {
     backgroundColor: '#fff',
-    borderRadius: 8,
+    borderRadius: 4,
     overflow: 'hidden',
-    top: 100,
-    left: 100,
+    top: 105,
+    right: 20,
     width: '60%',
+    position: 'absolute',
   },
   modalTextContainer: {
     flexDirection: 'row',

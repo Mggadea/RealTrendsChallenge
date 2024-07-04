@@ -15,7 +15,7 @@ const HomeScreen = () => {
 
   const [searchText, setSearchText] = useState<string>('');
 
-  const [condition, setCondition] = useState<Condition>('new');
+  const [condition, setCondition] = useState<Condition>('');
 
   useEffect(() => {
     const apiUrl =
