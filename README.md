@@ -13,15 +13,22 @@ Este es un proyecto que se hizo para la entrevista técnica de Real Trends.
 
 La aplicación utiliza la API de MercadoLibre para obtener datos que se muestran en una pantalla principal y una pantalla de detalles. Los usuarios pueden filtrar estos datos por nombre mediante una barra de búsqueda y por condición (usado o nuevo) mediante un filtro. Al seleccionar un producto, se accede a la pantalla de detalles donde se muestra información adicional como fotografías adicionales y descripciones. Además, la aplicación incluye una pestaña de favoritos donde los usuarios pueden ver los productos marcados como favoritos o sacarlos. Se trato de reutilizar la mayor cantidad de componentes, espero que les guste! 
 
-## Librerias 
-- react-native-vector-icons
-  Para tener iconos 
-- Zustand
-  Para manejo de estado
-- axios
-  Para el manejo de peticiones
--react-navigation
-  Para la navegacion (Se pedia usar https://github.com/wix/react-native-navigation , pero no he logrado hacerla funcionar en mi sistema, asi que me tome la libertad de cambiar de libreria por una con la cual estoy mas familiarizado)
+# Mi Proyecto de React Native
+
+Este proyecto utiliza varias librerías para diferentes funcionalidades. A continuación se presentan las librerías utilizadas y su propósito:
+
+- [react-native-vector-icons](https://github.com/oblador/react-native-vector-icons): Para tener íconos.
+- [Zustand](https://github.com/pmndrs/zustand): Para manejo de estado.
+- [axios](https://github.com/axios/axios): Para el manejo de peticiones.
+- [react-navigation](https://reactnavigation.org/): Para la navegación. Nota: Inicialmente se pedia usar [react-native-navigation](https://github.com/wix/react-native-navigation), pero debido a problemas de compatibilidad, se optó por `react-navigation`.
+
+## Instalación
+
+Para instalar las dependencias, usa el siguiente comando:
+
+```bash
+npm install
+
   
 
 
