@@ -24,16 +24,6 @@ Este proyecto utiliza varias librerías para diferentes funcionalidades. A conti
 
 ## Instalación
 
-Para instalar las dependencias, usa el siguiente comando:
-
-```bash
-npm install
-
-  
-
-
-## Instalación
-
 Instrucciones para instalar y configurar el proyecto en un entorno local.
 
 ```bash
