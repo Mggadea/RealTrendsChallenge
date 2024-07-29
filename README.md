@@ -1,6 +1,6 @@
-# Real Trends Challenge
+# Mercado Libre Clone 
 
-Este es un proyecto que se hizo para la entrevista técnica de Real Trends.
+Este es un proyecto que se hizo para una entrevista técnica 
 
 ## Tabla de Contenidos
 
